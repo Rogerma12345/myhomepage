@@ -25,31 +25,31 @@ export default function Component({ service }) {
   if (!data) {
     return (
       <Container service={service}>
+        <Block label="zerotier.name" />
         <Block label="zerotier.ip_assignments" />
         <Block label="zerotier.last_seen" />
-        <Block label="zerotier.authorized" />
       </Container>
     );
   }
 
+  const name =
+    typeof data?.name === "string" && data.name.trim() ? data.name : "-";
+
   const ips = Array.isArray(data?.config?.ipAssignments)
     ? data.config.ipAssignments.join(", ")
     : "-";
+
   const lastSeen =
     typeof data?.lastSeen === "number" ? new Date(data.lastSeen) : null;
-  const authorized =
-    typeof data?.config?.authorized === "boolean"
-      ? String(data.config.authorized)
-      : "-";
 
   return (
     <Container service={service}>
+      <Block label="zerotier.name" value={name} />
       <Block label="zerotier.ip_assignments" value={ips} />
       <Block
         label="zerotier.last_seen"
         value={lastSeen ? lastSeen.toLocaleString() : "-"}
       />
-      <Block label="zerotier.authorized" value={authorized} />
     </Container>
   );
 }

@@ -9,9 +9,12 @@ export default {
     member: {
       endpoint: "member/{nodeId}",
       headers: {
-        Authorization: "token {key}",
+        Authorization: "token {key}",              // ZeroTier要求
+        "User-Agent": "Homepage/1.0 (+gethomepage.dev)", // 避免WAF因UA缺失而403
+        Accept: "application/json",                // 期望JSON
       },
-      validate: ["id", "config", "lastSeen"],
+      // 包含 name / config.ipAssignments / lastSeen
+      validate: ["name", "config", "lastSeen"],
     },
   },
 };
