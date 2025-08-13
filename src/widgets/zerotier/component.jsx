@@ -10,7 +10,6 @@ import useWidgetAPI from "utils/proxy/use-widget-api";
  *   type: zerotier
  *   networkId: "8056c2e21c000001"
  *   nodeId:    "abcdef01234"
- *   key:       "your-zt-api-token"
  */
 export default function Component({ service }) {
   const { widget } = service;
