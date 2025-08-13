@@ -722,6 +722,11 @@
         "categories": "分类",
         "series": "丛书"
     },
+    "zerotier": {
+        "zerotier.name": "主机名",
+        "zerotier.ip_assignments": "地址",
+        "zerotier.last_seen": "最后上线"
+    },
     "uptimerobot": {
         "status": "Status",
         "uptime": "Uptime",
