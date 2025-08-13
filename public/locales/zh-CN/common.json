@@ -723,9 +723,9 @@
         "series": "丛书"
     },
     "zerotier": {
-        "zerotier.name": "主机名",
-        "zerotier.ip_assignments": "地址",
-        "zerotier.last_seen": "最后上线"
+        "name": "主机名",
+        "ip_assignments": "地址",
+        "last_seen": "最后上线"
     },
     "uptimerobot": {
         "status": "Status",

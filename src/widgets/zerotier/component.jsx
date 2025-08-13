@@ -16,6 +16,7 @@ import useWidgetAPI from "utils/proxy/use-widget-api";
  *     Accept:        "application/json"
  */
 export default function Component({ service }) {
+  const { t } = useTranslation();
   const { widget } = service;
 
   // 对应 widget.js 中 mappings.member
@@ -51,7 +52,8 @@ export default function Component({ service }) {
       <Block label="zerotier.ip_assignments" value={ips} />
       <Block
         label="zerotier.last_seen"
-        value={lastSeen ? lastSeen.toLocaleString() : "-"}
+        // 用内置格式化，而不是 toLocaleString()
+        value={lastSeen ? t("common.relativeDate", { value: lastSeen }) : "-"}
       />
     </Container>
   );
