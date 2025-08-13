@@ -140,6 +140,7 @@ import wgeasy from "./wgeasy/widget";
 import whatsupdocker from "./whatsupdocker/widget";
 import xteve from "./xteve/widget";
 import zabbix from "./zabbix/widget";
+import zerotier from "./zerotier/widget";
 
 const widgets = {
   adguard,
@@ -288,6 +289,7 @@ const widgets = {
   whatsupdocker,
   xteve,
   zabbix,
+  zerotier,
 };
 
 export default widgets;
