@@ -1,6 +1,6 @@
 // src/widgets/zerotier/component.jsx
-import Container from "components/services/widget/container";
 import Block from "components/services/widget/block";
+import Container from "components/services/widget/container";
 import { useTranslation } from "next-i18next";
 
 import useWidgetAPI from "utils/proxy/use-widget-api";
@@ -36,15 +36,11 @@ export default function Component({ service }) {
     );
   }
 
-  const name =
-    typeof data?.name === "string" && data.name.trim() ? data.name : "-";
+  const name = typeof data?.name === "string" && data.name.trim() ? data.name : "-";
 
-  const ips = Array.isArray(data?.config?.ipAssignments)
-    ? data.config.ipAssignments.join(", ")
-    : "-";
+  const ips = Array.isArray(data?.config?.ipAssignments) ? data.config.ipAssignments.join(", ") : "-";
 
-  const lastSeen =
-    typeof data?.lastSeen === "number" ? new Date(data.lastSeen) : null;
+  const lastSeen = typeof data?.lastSeen === "number" ? new Date(data.lastSeen) : null;
 
   return (
     <Container service={service}>
