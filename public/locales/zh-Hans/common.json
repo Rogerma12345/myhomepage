@@ -877,16 +877,16 @@
         "failed": "Failed"
     },
     "openwrt": {
-        "uptime": "Uptime",
+        "uptime": "运行时间",
         "cpuLoad": "CPU 负载平均值(5m)",
         "day": "天",
         "hour": "小时",
         "minute": "分钟",
         "second": "秒",
-        "up": "Up",
-        "down": "Down",
+        "up": "在线",
+        "down": "离线",
         "bytesTx": "已传输",
-        "bytesRx": "Received"
+        "bytesRx": "已接收"
     },
     "zerotier": {
         "name": "主机名",
