@@ -582,8 +582,8 @@
     },
     "truenas": {
         "load": "系统负载",
-        "uptime": "Uptime",
-        "alerts": "Alerts"
+        "uptime": "运行时间",
+        "alerts": "警报"
     },
     "pyload": {
         "speed": "速度",
@@ -642,7 +642,7 @@
     "mikrotik": {
         "cpuLoad": "处理器",
         "memoryUsed": "内存",
-        "uptime": "Uptime",
+        "uptime": "运行时间",
         "numberOfLeases": "租约"
     },
     "xteve": {
@@ -703,7 +703,7 @@
     "uptimekuma": {
         "up": "在线网站",
         "down": "离线网站",
-        "uptime": "Uptime",
+        "uptime": "在线时间",
         "incident": "严重事件",
         "m": "m"
     },
@@ -720,7 +720,7 @@
     },
     "diskstation": {
         "days": "Days",
-        "uptime": "Uptime",
+        "uptime": "运行时间",
         "volumeAvailable": "Available"
     },
     "dispatcharr": {
@@ -869,12 +869,12 @@
         "tags": "Tags"
     },
     "openmediavault": {
-        "downloading": "Downloading",
-        "total": "Total",
-        "running": "Running",
-        "stopped": "Stopped",
-        "passed": "Passed",
-        "failed": "Failed"
+        "downloading": "下载中",
+        "total": "总树",
+        "running": "运行中",
+        "stopped": "已停止",
+        "passed": "正常",
+        "failed": "异常"
     },
     "openwrt": {
         "uptime": "运行时间",
@@ -975,7 +975,7 @@
         "totalValue": "总计"
     },
     "crowdsec": {
-        "alerts": "Alerts",
+        "alerts": "警报",
         "bans": "禁用"
     },
     "wgeasy": {
