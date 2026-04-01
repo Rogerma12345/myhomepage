@@ -884,6 +884,11 @@
         "bytesTx": "已传输",
         "bytesRx": "Received"
     },
+    "zerotier": {
+        "name": "主机名",
+        "ip_assignments": "地址",
+        "last_seen": "最后上线"
+    },
     "uptimerobot": {
         "status": "Status",
         "uptime": "Uptime",

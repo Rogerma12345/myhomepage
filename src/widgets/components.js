@@ -161,6 +161,7 @@ const components = {
   xteve: dynamic(() => import("./xteve/component")),
   yourspotify: dynamic(() => import("./yourspotify/component")),
   zabbix: dynamic(() => import("./zabbix/component")),
+  zerotier: dynamic(() => import("./zerotier/component")),
 };
 
 export default components;
