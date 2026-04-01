@@ -1,0 +1,103 @@
+name: Feature Docker Prerelease
+
+on:
+  push:
+    branches:
+      - feature/zerotier-widget-dev
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: feature-docker-prerelease-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-prerelease:
+    name: Build docker image and create prerelease
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - name: Prepare release variables
+        shell: bash
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          TAG="ztw-dev-${GITHUB_RUN_NUMBER}-${SHORT_SHA}"
+          RELEASE_NAME="zerotier widget dev build ${GITHUB_RUN_NUMBER} (${SHORT_SHA})"
+          IMAGE_NAME="myhomepage-feature-zerotier-widget-dev:${TAG}"
+          ASSET_NAME="myhomepage-feature-zerotier-widget-dev-run${GITHUB_RUN_NUMBER}-${SHORT_SHA}-linux-amd64.docker-image.tar.gz"
+          COMMIT_MESSAGE="$(git log -1 --pretty=%s)"
+          BUILD_TIME_UTC="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+
+          {
+            echo "SHORT_SHA=${SHORT_SHA}"
+            echo "TAG=${TAG}"
+            echo "RELEASE_NAME=${RELEASE_NAME}"
+            echo "IMAGE_NAME=${IMAGE_NAME}"
+            echo "ASSET_NAME=${ASSET_NAME}"
+            echo "COMMIT_MESSAGE<<EOF"
+            echo "${COMMIT_MESSAGE}"
+            echo "EOF"
+            echo "BUILD_TIME_UTC=${BUILD_TIME_UTC}"
+          } >> "$GITHUB_ENV"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
+
+      - name: Build docker image locally
+        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7
+        with:
+          context: .
+          load: true
+          push: false
+          tags: ${{ env.IMAGE_NAME }}
+          platforms: linux/amd64
+          provenance: false
+          build-args: |
+            CI=true
+            BUILDTIME=${{ env.BUILD_TIME_UTC }}
+            VERSION=${{ env.TAG }}
+            REVISION=${{ github.sha }}
+
+      - name: Export docker image tar
+        shell: bash
+        run: |
+          docker save "${IMAGE_NAME}" -o docker-image.tar
+
+      - name: Compress docker image tar
+        shell: bash
+        run: |
+          gzip -c docker-image.tar > "${ASSET_NAME}"
+          rm -f docker-image.tar
+
+      - name: Create git tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          git tag "${TAG}"
+          git push origin "${TAG}"
+
+      - name: Create prerelease with single docker asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          gh release create "${TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "${RELEASE_NAME}" \
+            --notes "Automated prerelease for branch ${GITHUB_REF_NAME}
+
+          Commit: ${GITHUB_SHA}
+          Commit message: ${COMMIT_MESSAGE}
+          Docker image tag inside archive: ${IMAGE_NAME}
+          Import command after download: gunzip -c ${ASSET_NAME} | docker load
+          Built at (UTC): ${BUILD_TIME_UTC}" \
+            --prerelease \
+            "${ASSET_NAME}"
