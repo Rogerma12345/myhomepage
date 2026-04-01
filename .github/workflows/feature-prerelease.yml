@@ -47,6 +47,32 @@ jobs:
             echo "BUILD_TIME_UTC=${BUILD_TIME_UTC}"
           } >> "$GITHUB_ENV"
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Prebuild Next.js standalone output
+        shell: bash
+        env:
+          CI: "true"
+          BUILDTIME: ${{ env.BUILD_TIME_UTC }}
+          VERSION: ${{ env.TAG }}
+          REVISION: ${{ github.sha }}
+        run: |
+          pnpm build
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
 
